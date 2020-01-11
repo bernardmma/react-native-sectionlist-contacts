@@ -97,8 +97,9 @@ export default class SectionListModule extends Component {
         for (var i in data){
             if (data[i].data.length!=0){
                 delData.push(data[i])
-                letterData.push(data[i].key)
+
             }
+            letterData.push(data[i].key)
         }
         return{
             delData: delData,
@@ -136,7 +137,10 @@ export default class SectionListModule extends Component {
                                         }
                                         return(
                                             <TouchableWithoutFeedback key={'letter_'+index} onPress={()=>{
-                                                this.sectionList.scrollToLocation({animated: this.props.scrollAnimation, itemIndex: 0,sectionIndex: index,viewOffset: 0})
+                                                const foundLetter = delData.find(data => data.key === item);
+                                                if (foundLetter) {
+                                                    this.sectionList.scrollToLocation({animated: this.props.scrollAnimation, itemIndex: 0, sectionIndex: delData.findIndex(data => data.key === item),viewOffset: 0})
+                                                }
                                             }}>
                                                 <View style={[styles.letterItemView,otherStyle]}>
                                                     <Text numberOfLines={0} style={[styles.letterText,this.props.letterTextStyle]}>{item}</Text>
